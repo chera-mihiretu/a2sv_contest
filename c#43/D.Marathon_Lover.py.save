@@ -1,0 +1,40 @@
+
+from sys import stdin
+from collections import Counter
+
+
+input = lambda : stdin.readline().strip()
+
+def solution():
+	n = int(input())
+	hash_map = Counter(int)
+	answer = 0
+	for _ in range(n):
+        	line = input().split()
+        	if line[0] == '1':
+            		from_node, to_node, cost = line[1:]
+            		while from_node == to_node:
+                		if from_node < to_node:
+                    			change_to = to_node
+			                    hash_map[(change_to, to_node)] += cost
+      				              to_node = change_to
+        		        else:
+					change_to = from_node // 2
+                    			hash_map[(change_to, from_node)]
+                    			from_node = change_to  
+			else:   
+            from_node, to_node = line[1:]
+            while from_node == to_node:
+                if from_node < to_node:
+                    change_to = to_node
+                    answer += hash_map[(change_to, from_node)]
+                    to_node = change_to
+                else:
+                    change_to = from_node // 2
+                    answer += hash_map[(change_to, from_node)]
+                    from_node = change_to
+    print(answer)
+
+
+if __name__ == '__main__':
+	solutio()
