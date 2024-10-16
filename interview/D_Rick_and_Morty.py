@@ -1,19 +1,25 @@
 from sys import stdin,stdout
-from math import lcm
 # take input
 input = lambda: stdin.readline().strip()
 # solution
 def solution():
     a,b = [int(i) for i in input().split()]
     c,d = [int(i) for i in input().split()]
+    set_a = set()
+    set_b = set()
 
 
-    sub = max(a, b) - min(a, b)
-    
-    print(lcm(sub, sub // 9))
+    for i in range(1000):
+        a_jump = b + (i * a)
+        b_jump = d + (i * c)
+        set_a.add(a_jump)
+        set_b.add(b_jump)
 
-
-        
+        if a_jump in set_b :
+            return a_jump
+        elif b_jump in set_a:
+            return b_jump
+    return -1
 
 
 
