@@ -6,8 +6,11 @@ input = lambda: stdin.readline().strip()
 def solution():
     n = int(input())
 
-    answer = comb(n, 7) + comb(n, 6) + comb(n, 5)
-    print(answer)
+    seven = comb(n, 7)
+    six = comb(n, 6)
+    five = comb(n, 5)
+
+    print(seven + six + five)
 
 # run the code
 if __name__ == '__main__':

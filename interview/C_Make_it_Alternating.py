@@ -1,31 +1,27 @@
 from sys import stdin,stdout
-from math import comb
+from math import factorial
 # take input
 input = lambda: stdin.readline().strip()
 # solution
 def solution():
     string = input()
+    n = len(string)
+    k = 1
     count = 1
-    removes = 0
-    fromNumber = 0
+    comm = []
     for i in range(1, len(string)):
         if string[i] == string[i-1]:
             count += 1
         else:
-            
-            removes += count - 1
-            fromNumber += count if count != 1 else 0
-            count = 1
-    if count != 1:
-        removes += count - 1
-        fromNumber += count
+            k += 1
+            comm.append(count)
+            count = 1  
+    answer = factorial(n-k)
+    for i in comm:
+        answer *= i 
     
-    answer =   comb(fromNumber, removes)
+    print(n - k,  answer)     
     
-    number = string.count('0')
-    print(removes, answer *( 2 if number == 0 or number - len(string) == 0 else 1))
-
-
 
 # run the code
 if __name__ == '__main__':
