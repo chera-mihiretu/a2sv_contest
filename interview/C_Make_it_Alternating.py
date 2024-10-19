@@ -17,8 +17,7 @@ def solution():
             comm.append(count)
             count = 1  
     answer = factorial(n-k)
-    for i in comm:
-        answer *= i 
+    
     
     print(n - k,  answer)     
     
