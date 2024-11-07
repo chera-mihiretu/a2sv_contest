@@ -9,7 +9,12 @@ def solution():
         fr, to, we = [int(i) for i in input().split()]
         graph[fr].append([to, we])
     slowness = [int(i) for i in input().split()]
-    print(graph)
+    
+    distance = [float('inf') for i in range(n + 1)]
+    distance[1] = 0
+    Visited = [False for i in range(n + 1)]
+
+    heap = [(0, 1)]
 # run the code
 if __name__ == '__main__':
     test_case = int(input())
