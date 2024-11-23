@@ -10,7 +10,7 @@ def solution():
     for char in content:
         start = 0
         end = len(s) - 1
-        possible = 0
+        possible = True
         count = 0
         while start < end:
             possible = True
