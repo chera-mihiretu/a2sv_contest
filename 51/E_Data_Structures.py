@@ -1,42 +1,76 @@
-from sys import stdin,stdout
-# take input
-input = lambda: stdin.readline().strip()
-# solution is segented tree
+import sys, threading
+input = lambda: sys.stdin.readline().strip()
+
+
 class SegmentedTree:
-    def __init__(self, n, array):
-        self.ac_array = array
-        self.array = [0] * (n * 4)
-        self.fill(0, n - 1, 0)
-
-    def fill(self, array_l, array_r, segment):
-        if array_l == array_r:
-            self.array[segment] = self.ac_array[array_l]
-            return 
-        left_child, right_child = self.getMeChildren(segment)
-        mid = array_l + (array_r - array_l) // 2
-        self.fill(array_l, mid, left_child)
-        self.fill(mid + 1, array_r, right_child)
-
-    def getMeChildren(self, root):
-        return [root * 2 + 1, root * 2 + 2]
+    def __init__(self, array):
+        self.n = len(array)
+        self.arr = array
+        self.tree  = [0] * (4 * self.n)
+    def getChild(self, node):
+        return [2 * node + 1, 2 * node + 2]
     
-# solution
-def solution():
-    n,m = [int(i) for i in input().split()]
+
+    def build(self, node, left, right):
+        if left == right:
+            self.tree[node] = self.arr[left]
+            return 
+        
+        left_child, right_child = self.getChild(node)
+
+        mid = left + (right - left) // 2
+
+        self.build(left_child, left, mid)
+        self.build(right_child, mid + 1, right)
+    def update(self, node, left, right, u_left, u_right):
+        if u_left > u_right:
+            return
+        if left == u_left and right == u_right:
+            self.tree[node] = []
+            return
+        left_child, right_child = self.getChild(node)
+        mid = left + (right - left) // 2
+        self.tree[node] = 0
+        if mid >= u_right:
+            self.tree[right_child] = []
+        if mid < u_left:
+            self.tree[left_child] = []
+
+        self.update(left_child, left, mid, u_left, min(mid, u_right))
+        self.update(right_child, mid + 1, right, max(mid + 1, u_left), u_right)
+        
+    def query(self, node, left, right, index):
+        if left == right:
+            if self.tree[node] is  None:
+                return ['b', ]
+
+
+
+
+
+
+
+
+
+
+def main():
+    n, m = [int(i) for i in input().split()]
+
     a = [int(i) for i in input().split()]
     b = [int(i) for i in input().split()]
-    s = SegmentedTree(n, b)
-    print(s.array)
-    
-    for _ in range(m):
-        t, *command = [int(i) for i in input().split()]
-        if t == 1:
-            x, y, k = command
-        else:
-            index = command[0] 
 
-# run the code
+    segment = SegmentedTree(a)
+    answer = []
+    for _ in range(m):
+        # these is where things go
+        pass
+
+    
 if __name__ == '__main__':
-    test_case = 1 #int(input())
-    for i in range(test_case):
-        solution()
+    
+    sys.setrecursionlimit(1 << 30)
+    threading.stack_size(1 << 27)
+
+    main_thread = threading.Thread(target=main)
+    main_thread.start()
+    main_thread.join()
